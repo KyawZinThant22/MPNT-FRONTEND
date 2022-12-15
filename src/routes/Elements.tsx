@@ -9,4 +9,9 @@ const Loadable = (Component: ElementType) => (props: any) =>
     </Suspense>
   );
 
+//auth
 export const Login = Loadable(lazy(() => import("../pages/guest/Login")));
+
+//home
+
+export const Home = Loadable(lazy(() => import("../pages/admin/Home")));

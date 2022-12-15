@@ -8,6 +8,7 @@ import { Button, TextField } from "../../components/Elements/form";
 import { Login } from "../../api/auth";
 import { useAppDispatch } from "../../store/hook";
 import { setAuth, unSetAuth } from "../../store/reducer/auth/auth";
+import Cookies from "js-cookie";
 
 interface ILoginFormProps {
   email: string;
@@ -23,14 +24,13 @@ const LoginPage = () => {
     email: Yup.string().required("Email  is required"),
     password: Yup.string()
       .required("Password is required")
-      .min(8, "Password must be at least 8 characters")
+      .min(6, "Password must be at least 8 characters")
       .max(32, "Password must be at most 32 characters"),
   });
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<ILoginFormProps>({
@@ -44,6 +44,7 @@ const LoginPage = () => {
     })
       .then((res) => {
         if (res.data.meta.success) {
+          Cookies.set("token", res.data.body.token);
           dispatch(
             setAuth({
               email: res.data.body.email,
@@ -60,7 +61,6 @@ const LoginPage = () => {
       .catch((err) => {
         console.log(err);
       });
-    reset();
   };
 
   return (

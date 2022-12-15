@@ -90,12 +90,16 @@ const LoginPage = () => {
         />
 
         <div className="mt-4">
-          <Button
-            label="Sign up"
-            variant="primary"
-            type="submit"
-            submitting={isSubmitting}
-          />
+          {isSubmitting ? (
+            <p>submitting</p>
+          ) : (
+            <Button
+              label="Sign up"
+              variant="primary"
+              type="submit"
+              submitting={isSubmitting}
+            />
+          )}
         </div>
       </form>
     </div>

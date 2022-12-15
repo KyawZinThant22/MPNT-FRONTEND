@@ -21,10 +21,10 @@ const Button = ({
     <div
       onClick={action}
       className={`w-full text-xl h-16 px-5 hover:delay-75 font-semibold  cursor-pointer rounded-lg flex items-center justify-center  ${
-        submitting && "bg-gray-400"
-      } ${
         variant === "primary" &&
-        `bg-primary ${submitting ? "" : "hover:bg-[#36816def]"}  text-white`
+        `${!submitting ? "bg-primary" : "bg-gray-400"} bg-primary ${
+          submitting ? "" : "hover:bg-[#36816def]"
+        }  text-white`
       }`}
     >
       <button type={type} disabled={disabled || submitting}>

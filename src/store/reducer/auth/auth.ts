@@ -19,7 +19,6 @@ interface IAuthPayload {
 }
 
 const token = Cookies.get("token") as string;
-console.log(token);
 const initialState: IAuth = {
   name: "",
   token: token || "",

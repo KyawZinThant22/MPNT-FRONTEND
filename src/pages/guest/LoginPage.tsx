@@ -5,6 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 import { Button, TextField } from "../../components/Elements/form";
+import { Login } from "../../api/auth";
+import { useAppDispatch } from "../../store/hook";
+import { setAuth, unSetAuth } from "../../store/reducer/auth/auth";
 
 interface ILoginFormProps {
   email: string;
@@ -12,6 +15,9 @@ interface ILoginFormProps {
 }
 
 const LoginPage = () => {
+  //instance
+  const dispatch = useAppDispatch();
+
   // schema
   const schema = Yup.object().shape({
     email: Yup.string().required("Email  is required"),
@@ -25,14 +31,35 @@ const LoginPage = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm<ILoginFormProps>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data: ILoginFormProps) => {
-    console.log(data);
+    Login({
+      email: data.email,
+      password: data.password,
+    })
+      .then((res) => {
+        if (res.data.meta.success) {
+          dispatch(
+            setAuth({
+              email: res.data.body.email,
+              id: res.data.body.id,
+              name: res.data.body.name,
+              token: res.data.body.token,
+            })
+          );
+          //  FIXME:
+        } else {
+          dispatch(unSetAuth());
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     reset();
   };
 
@@ -63,7 +90,12 @@ const LoginPage = () => {
         />
 
         <div className="mt-4">
-          <Button label="Sign up" variant="primary" type="submit" />
+          <Button
+            label="Sign up"
+            variant="primary"
+            type="submit"
+            submitting={isSubmitting}
+          />
         </div>
       </form>
     </div>

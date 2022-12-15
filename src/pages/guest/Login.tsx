@@ -1,11 +1,16 @@
-import React from "react";
 import LoginPage from "./LoginPage";
-
+import LoginBanner from "../../assets/image/login-banner.jpg";
 const Login = () => {
   return (
-    <div className="flex  h-screen">
-      <div className="w-[60%]  bg-red-400 lg:grid hidden"></div>
-      <div className="w-[40%] h-screen justify-center items-center grid ">
+    <div className="flex ">
+      <div className="w-[65%] xl:grid hidden">
+        <img
+          src={LoginBanner}
+          alt="login-banner"
+          className=" w-full bg-top h-screen"
+        />
+      </div>
+      <div className="w-[35%] justify-center  h-screen items-center grid mx-auto ">
         <div className=" h-[30rem] w-[400px]   mx-auto">
           <LoginPage />
         </div>

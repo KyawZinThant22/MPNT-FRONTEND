@@ -1,8 +1,15 @@
+import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./routes/Index";
+import { store } from "./store";
+
 function App() {
   return (
-    <div className="min-h-screen flex justify-center items-center">
-      <h1 className="text-3xl font-bold text-blue-600"></h1>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Routes />
+      </Router>
+    </Provider>
   );
 }
 
